@@ -8,14 +8,19 @@ private:
 
 	//properties
 	HINSTANCE hInstance;
+	WNDCLASS wc;
 	HWND hwnd;
-	RECT rectWindow;
-	LPCSTR wTitle;
-	WNDCLASSEX wc;
 
 	//methods
-	bool init();
+	LPCWSTR windowClass() { return L"MyWindow1"; }
+	LPCWSTR windowTitle() { return L"Window"; }
 
+	bool init();
+	bool createWindow();
+
+	static LRESULT CALLBACK WindowProc(HWND hwnd, int msg, WPARAM wParam, LPARAM lParam);
+
+	LRESULT HandleMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
 public:
@@ -23,13 +28,16 @@ public:
 	//methods
 	MyWindow(HINSTANCE hInstance);
 
-	void SetTitle(LPCSTR wTtile) {
-		this->wTitle = wTtile;
-	}
 
-	LPCSTR GetTitle() {
-		return this->wTitle;
+
+	//methods for Set
+
+	//methods for Get
+	HWND Window() {
+		return hwnd;
 	}
+	
+
 
 
 

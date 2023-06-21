@@ -1,7 +1,12 @@
 #include <Windows.h>
+#include "MyWindow.h"
+
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
+	
+	MyWindow* win = new MyWindow(hInstance);
 
+	ShowWindow(win->Window(), nCmdShow);
 
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
@@ -9,6 +14,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+
+	delete win;
 
 
 	return (int)msg.wParam;
