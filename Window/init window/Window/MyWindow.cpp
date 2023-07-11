@@ -1,35 +1,38 @@
 #include "MyWindow.h"
 
-MyWindow::MyWindow(HINSTANCE hInstance) :
-	hInstance(hInstance)
+MyWindow::MyWindow(HINSTANCE hInstance)
 {
-	if (!this->init())
-		MessageBox(NULL, L"Error Register Class Window", L"Register Error", MB_OK);
+	this->hInstance = hInstance;
+	this->hwnd = NULL;
 
-	if (!this->createWindow())
-		MessageBox(NULL, L"Error Create Window", L"Create Window Error", MB_OK);
+	SetRect(&rc, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT);
 
-
+	ZeroMemory(&wc, sizeof(WNDCLASS));
+	wc.hInstance = hInstance;
+	wc.lpfnWndProc = reinterpret_cast<WNDPROC>(&MyWindow::WindowProc);
+	wc.lpszClassName = windowClass;
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)CreateSolidBrush(RGB(255, 255, 255));
+	wc.style = CS_VREDRAW | CS_HREDRAW;
 }
 
 bool MyWindow::init() {
 
-	ZeroMemory(&wc, sizeof(WNDCLASSEX));
+	if (!RegisterClass(&wc)) {
+		MessageBox(NULL, L"Error Register Class Window", L"Register Error", MB_OK);
+		return false;
+	}
 
-	wc.hInstance = this->hInstance;
-	wc.lpfnWndProc = reinterpret_cast<WNDPROC>(&MyWindow::WindowProc);
-	wc.lpszClassName = this->windowClass();
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)CreateSolidBrush(RGB(255, 255, 255));
-	wc.style = CS_VREDRAW | CS_HREDRAW;
+	if (!createWindow()) {
+		MessageBox(NULL, L"Error Create Window", L"Create Window Error", MB_OK);
+		return false;
+	}
 
-	return RegisterClass(&this->wc);
+	return true;
 }
 
 bool MyWindow::createWindow() {
-	this->hwnd = CreateWindow(this->windowClass(), this->windowTitle(), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, NULL, NULL);
-
-
+	hwnd = CreateWindow(windowClass, windowTitle, WS_OVERLAPPEDWINDOW, rc.left, rc.top, rc.right, rc.bottom, NULL, NULL, hInstance, NULL);
 	return hwnd ? true : false;
 }
 

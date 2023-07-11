@@ -6,6 +6,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	
 	MyWindow* win = new MyWindow(hInstance);
 
+	win->setTitle(L"Roseedee");
+
+	win->init();
+
 	ShowWindow(win->Window(), nCmdShow);
 
 	MSG msg;

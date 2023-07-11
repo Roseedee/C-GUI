@@ -8,17 +8,15 @@ private:
 
 	//properties
 	HINSTANCE hInstance;
-	WNDCLASS wc;
 	HWND hwnd;
-	RECT winRect;
+	WNDCLASS wc;
+	RECT rc;
 
 	//methods
-	LPCWSTR windowClass() { return L"MyWindow1"; }
-	LPCWSTR windowTitle() { return L"Window"; }
+	LPCWSTR windowClass = L"MyWindow";
+	LPCWSTR windowTitle = L"Window";
 
-	bool init();
 	bool createWindow();
-	void winSize();
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, int msg, WPARAM wParam, LPARAM lParam);
 
@@ -27,10 +25,27 @@ public:
 
 	//methods
 	MyWindow(HINSTANCE hInstance);
-
-
+	bool init();
 
 	//---------- methods for Set ----------//
+	//below method use before init() method, if use after init() method is void
+	void setRect(RECT rc) {
+		this->rc = rc;
+	}
+
+	void setPosition(int x, int y) {
+		rc.left = x;
+		rc.top = y;
+	}
+
+	void setSize(int width, int height) {
+		rc.right = width;
+		rc.bottom = height;
+	}
+
+	void setTitle(LPCWSTR windowTitle) {
+		this->windowTitle = windowTitle;
+	}
 
 
 	//---------- end ----------//
