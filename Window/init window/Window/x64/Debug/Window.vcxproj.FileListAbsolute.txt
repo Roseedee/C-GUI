@@ -1,0 +1,3 @@
+D:\Dee\Coding\C\C-GUI\Window\Window\x64\Debug\Window.vcxproj.MdMergeInputs.cache
+D:\Dee\Coding\C\C-GUI\Window\Window\x64\Debug\Window.vcxproj.cppwinrt_plat.cache
+D:\Dee\Coding\C\C-GUI\Window\Window\x64\Debug\Window.vcxproj.cppwinrt_comp.cache
